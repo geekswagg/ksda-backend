@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PrayercellsController;
+use App\Http\Controllers\UserAuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,8 @@ Route::get('v1/prayercells/{prayercell}', [PrayercellsController::class, 'show']
 Route::post('v1/prayercells', [PrayercellsController::class, 'store']) -> name('prayercells.store');
 Route::put('v1/prayercells/{prayercell}', [PrayercellsController::class, 'update']) -> name('prayercells.update');
 Route::delete('v1/prayercells/{prayercell}', [PrayercellsController::class, 'destroy']) -> name('prayercells.destory');
+
+
+Route::post('login', [UserAuthenticationController::class, 'login']);
+Route::post('register', [UserAuthenticationController::class, 'register']);
+Route::post('logout', [UserAuthenticationController::class, 'logout'])->middleware('auth:sanctum');
