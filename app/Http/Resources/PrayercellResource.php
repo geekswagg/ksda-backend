@@ -16,7 +16,9 @@ class PrayercellResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'leader' => $this->leader,
+            'contact' => $this->contact
         ];
     }
 }

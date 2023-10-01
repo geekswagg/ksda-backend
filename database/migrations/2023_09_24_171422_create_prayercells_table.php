@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('prayercells', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('leader');
+            $table->string('contact');
             $table->timestamps();
         });
     }

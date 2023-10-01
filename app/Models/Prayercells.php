@@ -10,6 +10,8 @@ class Prayercells extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'leader',
+        'contact'
     ];
 }

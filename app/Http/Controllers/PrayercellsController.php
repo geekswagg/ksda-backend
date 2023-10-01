@@ -13,8 +13,8 @@ class PrayercellsController extends Controller
      */
     public function index()
     {
-        //return Prayercells::all();
-       return PrayercellResource::collection(Prayercells::all());
+       $data = PrayercellResource::collection(Prayercells::all());
+       return response()->json($data, 200);
     }
 
     /**
@@ -22,10 +22,14 @@ class PrayercellsController extends Controller
      */
     public function store(Request $request)
     {
-        $prayercell_name = $request->input('name');
+        $name = $request->input('name');
+        $leader = $request->input('leader');
+        $contact = $request->input('contact');
 
         $prayercell = Prayercells::create([
-            'name' => $prayercell_name
+            'name' => $name,
+            'leader' => $leader,
+            'contact' => $contact
         ]);
 
         return response() -> json([
@@ -38,7 +42,8 @@ class PrayercellsController extends Controller
      */
     public function show(Prayercells $prayercell)
     {
-        return new PrayercellResource($prayercell);
+        $data = new PrayercellResource($prayercell);
+        return response()-> json($data, 200);
     }
 
     /**
@@ -46,10 +51,14 @@ class PrayercellsController extends Controller
      */
     public function update(Request $request, Prayercells $prayercell)
     {
-        $prayercell_name = $request-> input('name');
+        $name = $request-> input('name');
+        $leader = $request-> input('leader');
+        $contact = $request-> input('contact');
 
         $prayercell -> update([
-            'name' => $prayercell_name
+            'name' => $name,
+            'leader' => $leader,
+            'contact' => $contact
         ]);
 
         return response() -> json([
