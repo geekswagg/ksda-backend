@@ -14,6 +14,7 @@ This KSDA-Backend is a web application developed by Laravel framework. It has th
 - Composer
 - mbstring
 - dom extention
+- php8.1-fpm
 
 ## Installation Steps
 
