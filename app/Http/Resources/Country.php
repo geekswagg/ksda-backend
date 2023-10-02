@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PrayercellResource extends JsonResource
+class Country extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,15 @@ class PrayercellResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        return parent::toArray($request);
+        {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'leader' => $this->leader,
-            'contact' => $this->contact
+            'ccode' => $this->ccode,
+            'created_at' => $this->created_at->format('m/d/Y'),
+            'updated_at' => $this->updated_at->format('m/d/Y'),
         ];
+    }
     }
 }
