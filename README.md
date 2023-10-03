@@ -5,6 +5,9 @@ This KSDA-Backend is a web application developed by Laravel framework. It has th
 - Users and Roles Management
 - Prayercell Management
 - Country Management
+- Department Management
+- Folders Management
+- Status Management
 
 ## Requirements
 
