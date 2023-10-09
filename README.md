@@ -8,6 +8,9 @@ This KSDA-Backend is a web application developed by Laravel framework. It has th
 - Department Management
 - Folders Management
 - Status Management
+- Position Management
+- Industry Management
+- Membership Type Management
 
 ## Requirements
 

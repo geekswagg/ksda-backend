@@ -9,6 +9,9 @@ use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\FolderController;
 use App\Http\Controllers\API\StatusController;
+use App\Http\Controllers\API\PositionController;
+use App\Http\Controllers\API\IndustryController;
+use App\Http\Controllers\API\MembershiptypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,6 +110,60 @@ Route::controller(StatusController::class)->group(function () {
     Route::get('view-statuses', 'index');
     Route::delete('destroy-statuses/{status}', 'destroy');
     Route::put('update-statuses/{status}', 'update');
+});
+/*
+|--------------------------------------------------------------------------
+| END OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(PositionController::class)->group(function () {
+    Route::get('show-positions/{position}', 'show');
+    Route::post('add-positions', 'store');
+    Route::get('view-positions', 'index');
+    Route::delete('destroy-positions/{position}', 'destroy');
+    Route::put('update-positions/{position}', 'update');
+});
+/*
+|--------------------------------------------------------------------------
+| END OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(MembershiptypeController::class)->group(function () {
+    Route::get('show-membershiptypes/{membershiptype}', 'show');
+    Route::post('add-membershiptypes', 'store');
+    Route::get('view-membershiptypes', 'index');
+    Route::delete('destroy-membershiptypes/{membershiptype}', 'destroy');
+    Route::put('update-membershiptypes/{membershiptype}', 'update');
+});
+/*
+|--------------------------------------------------------------------------
+| END OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(IndustryController::class)->group(function () {
+    Route::get('show-industries/{industry}', 'show');
+    Route::post('add-industries', 'store');
+    Route::get('view-industries', 'index');
+    Route::delete('destroy-industries/{industry}', 'destroy');
+    Route::put('update-industries/{industry}', 'update');
 });
 /*
 |--------------------------------------------------------------------------
