@@ -12,6 +12,7 @@ use App\Http\Controllers\API\StatusController;
 use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\IndustryController;
 use App\Http\Controllers\API\MembershiptypeController;
+use App\Http\Controllers\API\PaymentmodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,5 +169,24 @@ Route::controller(IndustryController::class)->group(function () {
 /*
 |--------------------------------------------------------------------------
 | END OF STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF PAYMENT MODE API Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(PaymentmodeController::class)->group(function () {
+    Route::get('show-paymentmodes/{paymentmode}', 'show');
+    Route::post('add-paymentmodes', 'store');
+    Route::get('view-paymentmodes', 'index');
+    Route::delete('destroy-paymentmodes/{paymentmode}', 'destroy');
+    Route::put('update-paymentmodes/{paymentmode}', 'update');
+    Route::post('search-paymentmodes', 'searchpaymentmode');
+});
+/*
+|--------------------------------------------------------------------------
+| END OF PAYMENT MODE API Routes
 |--------------------------------------------------------------------------
 */

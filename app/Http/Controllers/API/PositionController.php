@@ -46,6 +46,7 @@ class PositionController extends BaseController
     }
     
     #END
+    
     #START OF FUNCTION TO EDIT | UPDATE
     public function update(Request $request, Position $position)
     {
