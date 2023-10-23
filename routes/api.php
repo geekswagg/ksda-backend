@@ -13,6 +13,7 @@ use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\IndustryController;
 use App\Http\Controllers\API\MembershiptypeController;
 use App\Http\Controllers\API\PaymentmodeController;
+use App\Http\Controllers\API\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,7 @@ Route::controller(CountryController::class)->group(function () {
     Route::get('view-countries', 'index');
     Route::delete('destroy-countries/{country}', 'destroy');
     Route::put('update-countries/{country}', 'update');
+    Route::get('search-countries/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +79,7 @@ Route::controller(DepartmentController::class)->group(function () {
     Route::get('view-departments', 'index');
     Route::delete('destroy-departments/{department}', 'destroy');
     Route::put('update-departments/{department}', 'update');
+    Route::get('search-departments/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +97,7 @@ Route::controller(FolderController::class)->group(function () {
     Route::get('view-folders', 'index');
     Route::delete('destroy-folders/{folder}', 'destroy');
     Route::put('update-folders/{folder}', 'update');
+    Route::get('search-folders/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +115,7 @@ Route::controller(StatusController::class)->group(function () {
     Route::get('view-statuses', 'index');
     Route::delete('destroy-statuses/{status}', 'destroy');
     Route::put('update-statuses/{status}', 'update');
+    Route::get('search-statuses/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +125,7 @@ Route::controller(StatusController::class)->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| START OF STATUS API Routes
+| START OF POSITION API Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(PositionController::class)->group(function () {
@@ -129,16 +134,17 @@ Route::controller(PositionController::class)->group(function () {
     Route::get('view-positions', 'index');
     Route::delete('destroy-positions/{position}', 'destroy');
     Route::put('update-positions/{position}', 'update');
+    Route::get('search-positions/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
-| END OF STATUS API Routes
+| END OF POSITION API Routes
 |--------------------------------------------------------------------------
 */
 
 /*
 |--------------------------------------------------------------------------
-| START OF STATUS API Routes
+| START OF MEMBERSHIP TYPE API Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(MembershiptypeController::class)->group(function () {
@@ -147,16 +153,17 @@ Route::controller(MembershiptypeController::class)->group(function () {
     Route::get('view-membershiptypes', 'index');
     Route::delete('destroy-membershiptypes/{membershiptype}', 'destroy');
     Route::put('update-membershiptypes/{membershiptype}', 'update');
+    Route::get('search-membershiptypes/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
-| END OF STATUS API Routes
+| END OF MEMBERSHIP TYPE API Routes
 |--------------------------------------------------------------------------
 */
 
 /*
 |--------------------------------------------------------------------------
-| START OF STATUS API Routes
+| START OF INDUSTRY API Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(IndustryController::class)->group(function () {
@@ -165,10 +172,11 @@ Route::controller(IndustryController::class)->group(function () {
     Route::get('view-industries', 'index');
     Route::delete('destroy-industries/{industry}', 'destroy');
     Route::put('update-industries/{industry}', 'update');
+    Route::get('search-industries/{name}','search');
 });
 /*
 |--------------------------------------------------------------------------
-| END OF STATUS API Routes
+| END OF INDUSTRY API Routes
 |--------------------------------------------------------------------------
 */
 
@@ -183,10 +191,33 @@ Route::controller(PaymentmodeController::class)->group(function () {
     Route::get('view-paymentmodes', 'index');
     Route::delete('destroy-paymentmodes/{paymentmode}', 'destroy');
     Route::put('update-paymentmodes/{paymentmode}', 'update');
-    Route::post('search-paymentmodes', 'searchpaymentmode');
+    Route::get('search-paymentmodes/{name}','search');
+
 });
 /*
 |--------------------------------------------------------------------------
 | END OF PAYMENT MODE API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF DOCUMENT API Routes
+|--------------------------------------------------------------------------
+*/
+
+ Route::controller(DocumentController::class)->group(function () {
+    Route::get('show-documents/{document}', 'show');
+    Route::post('store-documents', 'store');
+    Route::get('view-documents', 'index');
+    Route::delete('destroy-documents/{document}', 'destroy');
+    Route::post('update-documents', 'update');
+    Route::get('search-documents/{name}', 'search');
+
+});
+
+ /*
+|--------------------------------------------------------------------------
+| END OF DOCUMENT API Routes
 |--------------------------------------------------------------------------
 */

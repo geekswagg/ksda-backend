@@ -10,15 +10,22 @@ use App\Http\Resources\Status as statusResource;
 
 class StatusController extends BaseController
 {
-    #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $statuses = Status::all();
         return $this->sendResponse(StatusResource::collection($statuses), 'Statuses fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -32,8 +39,11 @@ class StatusController extends BaseController
         return $this->sendResponse(new StatusResource($status), 'Status created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $status = Status::find($id);
@@ -43,8 +53,11 @@ class StatusController extends BaseController
         return $this->sendResponse(new StatusResource($status), 'Status fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+     /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Status $status)
     {
         $input = $request->all();
@@ -59,13 +72,35 @@ class StatusController extends BaseController
         
         return $this->sendResponse(new StatusResource($status), 'Status updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Status $status)
     {
         $status->delete();
         return $this->sendResponse([], 'Status deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/  
+                public function search($name)
+                {
+                    $result = Status::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+     /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }

@@ -11,15 +11,22 @@ use App\Http\Resources\Department as DepartmentResource;
 
 class DepartmentController extends BaseController
 {
-    #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $departments = Department::all();
         return $this->sendResponse(DepartmentResource::collection($departments), 'departments fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -34,8 +41,11 @@ class DepartmentController extends BaseController
         return $this->sendResponse(new DepartmentResource($department), 'Department created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD AT A TIME
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $department = Department::find($id);
@@ -45,8 +55,11 @@ class DepartmentController extends BaseController
         return $this->sendResponse(new DepartmentResource($department), 'Department fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Department $department)
     {
         $input = $request->all();
@@ -63,13 +76,35 @@ class DepartmentController extends BaseController
         
         return $this->sendResponse(new DepartmentResource($department), 'Department updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Department $department)
     {
         $department->delete();
         return $this->sendResponse([], 'Department deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/  
+                public function search($name)
+                {
+                    $result = Department::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+        /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }

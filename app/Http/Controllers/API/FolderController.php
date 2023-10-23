@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-//use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -12,15 +11,22 @@ use App\Http\Resources\Folder as FolderResource;
 
 class FolderController extends BaseController
 {
-    #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $folders = Folder::all();
         return $this->sendResponse(FolderResource::collection($folders), 'Folders fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -34,8 +40,11 @@ class FolderController extends BaseController
         return $this->sendResponse(new FolderResource($folder), 'Folder created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $folder = Folder::find($id);
@@ -45,8 +54,11 @@ class FolderController extends BaseController
         return $this->sendResponse(new FolderResource($folder), 'Folder fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Folder $folder)
     {
         $input = $request->all();
@@ -61,13 +73,35 @@ class FolderController extends BaseController
         
         return $this->sendResponse(new FolderResource($folder), 'Folder updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Folder $folder)
     {
         $folder->delete();
         return $this->sendResponse([], 'Folder deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/  
+                public function search($name)
+                {
+                    $result = Folder::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+    /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }

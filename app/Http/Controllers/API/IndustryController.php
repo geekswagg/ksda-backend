@@ -10,16 +10,22 @@ use App\Http\Resources\Industry as IndustryResource;
 
 class IndustryController extends BaseController
 {
-    //
-     #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $industries = Industry::all();
         return $this->sendResponse(IndustryResource::collection($industries), 'industries fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -34,8 +40,11 @@ class IndustryController extends BaseController
         return $this->sendResponse(new IndustryResource($industry), 'Industry created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $industry = Industry::find($id);
@@ -45,8 +54,11 @@ class IndustryController extends BaseController
         return $this->sendResponse(new IndustryResource($industry), 'Industry fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Industry $industry)
     {
         $input = $request->all();
@@ -63,14 +75,36 @@ class IndustryController extends BaseController
         
         return $this->sendResponse(new IndustryResource($industry), 'Industry updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Industry $industry)
     {
         $industry->delete();
         return $this->sendResponse([], 'Industry deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/   
+                public function search($name)
+                {
+                    $result = Industry::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+     /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }
 

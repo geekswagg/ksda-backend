@@ -10,16 +10,22 @@ use App\Http\Resources\Membershiptype as MembershiptypeResource;
 
 class MembershiptypeController extends BaseController
 {
-    //
-     #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $membershiptypes = Membershiptype::all();
         return $this->sendResponse(MembershiptypeResource::collection($membershiptypes), 'Membership Types Fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -34,8 +40,11 @@ class MembershiptypeController extends BaseController
         return $this->sendResponse(new MembershiptypeResource($membershiptype), 'Membership Type Created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SHOW A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $membershiptype = Membershiptype::find($id);
@@ -45,8 +54,11 @@ class MembershiptypeController extends BaseController
         return $this->sendResponse(new MembershiptypeResource($membershiptype), 'Membership Type Fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Membershiptype $membershiptype)
     {
         $input = $request->all();
@@ -63,14 +75,36 @@ class MembershiptypeController extends BaseController
         
         return $this->sendResponse(new MembershiptypeResource($membershiptype), 'Membership Ttype Updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A  RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Membershiptype $membershiptype)
     {
         $membershiptype->delete();
         return $this->sendResponse([], 'Membership Type Deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD
+|--------------------------------------------------------------------------
+*/   
+            public function search($name)
+            {
+                $result = Membershiptype::where('name', 'LIKE', '%'. $name. '%')->get();
+                if(count($result)){
+                 return Response()->json($result);
+                }
+                else
+                {
+                return response()->json(['Result' => 'No Data | not found'], 404);
+              }
+            }
+/    /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }
 
