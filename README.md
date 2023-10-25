@@ -1,6 +1,6 @@
 ## About Karengata SDA Backend - CIMS
 
-This KSDA-Backend is a web application developed by Laravel framework. It has the following API Features:
+This KSDA-Backend is a web application developed by [Laravel framework](https://laravel.com/). It has the following API Features:
 
 - Users and Roles Management
 - Prayercell Management
