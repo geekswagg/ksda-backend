@@ -14,6 +14,7 @@ use App\Http\Controllers\API\IndustryController;
 use App\Http\Controllers\API\MembershiptypeController;
 use App\Http\Controllers\API\PaymentmodeController;
 use App\Http\Controllers\API\DocumentController;
+use App\Http\Controllers\API\MaritalstatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -219,5 +220,27 @@ Route::controller(PaymentmodeController::class)->group(function () {
  /*
 |--------------------------------------------------------------------------
 | END OF DOCUMENT API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF MARITAL STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+ Route::controller(MaritalstatusController::class)->group(function () {
+    Route::get('show-maritalstatuses/{maritalstatus}', 'show');
+    Route::post('store-maritalstatuses', 'store');
+    Route::get('view-maritalstatuses', 'index');
+    Route::delete('destroy-maritalstatuses/{maritalstatus}', 'destroy');
+    Route::post('update-maritalstatuses', 'update');
+    Route::get('search-maritalstatuses/{name}', 'search');
+
+});
+
+ /*
+|--------------------------------------------------------------------------
+| END OF MARITAL STATUS API Routes
 |--------------------------------------------------------------------------
 */
