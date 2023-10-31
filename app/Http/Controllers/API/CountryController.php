@@ -10,15 +10,23 @@ use App\Http\Resources\Country as countryResource;
    
 class CountryController extends BaseController
 {
-    #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
+    
     public function index()
     {
         $countries = Country::all();
         return $this->sendResponse(countryResource::collection($countries), 'Countries fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO STORE OR ADD A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -33,8 +41,11 @@ class CountryController extends BaseController
         return $this->sendResponse(new countryResource($country), 'Country created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DISPLAY A RECORD AT A TIME
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $country = Country::find($id);
@@ -44,8 +55,11 @@ class CountryController extends BaseController
         return $this->sendResponse(new countryResource($country), 'Country fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF UPDATE FUNCTION
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Country $country)
     {
         $input = $request->all();
@@ -62,13 +76,36 @@ class CountryController extends BaseController
         
         return $this->sendResponse(new countryResource($country), 'Country updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+
+    /*
+|--------------------------------------------------------------------------
+| START OF DELETE FUNCTION 
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Country $country)
     {
         $country->delete();
         return $this->sendResponse([], 'Country deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH RECORD OR RECORDS
+|--------------------------------------------------------------------------
+*/   
+                public function search($name)
+                {
+                    $result = Country::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+       /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }

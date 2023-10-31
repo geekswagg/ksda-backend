@@ -10,16 +10,22 @@ use App\Http\Resources\Position as PositionResource;
 
 class PositionController extends BaseController
 {
-   //
-     #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $positions = Position::all();
         return $this->sendResponse(PositionResource::collection($positions), 'positions fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -34,8 +40,11 @@ class PositionController extends BaseController
         return $this->sendResponse(new PositionResource($position), 'Position created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $position = Position::find($id);
@@ -45,9 +54,11 @@ class PositionController extends BaseController
         return $this->sendResponse(new PositionResource($position), 'Position fetched.');
     }
     
-    #END
-    
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Position $position)
     {
         $input = $request->all();
@@ -64,14 +75,36 @@ class PositionController extends BaseController
         
         return $this->sendResponse(new PositionResource($position), 'Position updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Position $position)
     {
         $position->delete();
         return $this->sendResponse([], 'Position deleted.');
     }
-    #END
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/   
+                public function search($name)
+                {
+                    $result = Position::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+     /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }
 
