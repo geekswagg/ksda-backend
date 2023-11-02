@@ -15,6 +15,7 @@ use App\Http\Controllers\API\MembershiptypeController;
 use App\Http\Controllers\API\PaymentmodeController;
 use App\Http\Controllers\API\DocumentController;
 use App\Http\Controllers\API\MaritalstatusController;
+use App\Http\Controllers\API\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -245,5 +246,26 @@ Route::controller(PaymentmodeController::class)->group(function () {
  /*
 |--------------------------------------------------------------------------
 | END OF MARITAL STATUS API Routes
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| START OF MEMBER API Routes
+|--------------------------------------------------------------------------
+*/
+
+ Route::controller(MemberController::class)->group(function () {
+    Route::post('store-members', 'store');
+    Route::get('view-members', 'index');
+    Route::delete('destroy-members/{member}', 'destroy');
+    Route::post('update-members', 'update');
+    Route::get('search-members/{name}', 'search');
+
+});
+
+ /*
+|--------------------------------------------------------------------------
+| END OF MEMBER API Routes
 |--------------------------------------------------------------------------
 */
