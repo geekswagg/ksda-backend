@@ -6,17 +6,32 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class UserAuthenticationController extends Controller
 {
+        /*
+|--------------------------------------------------------------------------
+| START OF ADD OR STORE FUNCTION
+|--------------------------------------------------------------------------
+*/ 
+
     public function register(Request $request) {
-        $name = $request->input('name');
+       
+        $first_name = $request->input('first_name');
+        $middle_name = $request->input('middle_name');
+        $last_name = $request->input('last_name');
         $email = strtolower($request->input('email'));
         $password = $request->input('password');
+        $active = $request->input('active');
 
         $user = User::create([
-            'name' => $name,
+           
+            'first_name' => $first_name,
+            'middle_name' => $middle_name,
+            'last_name' => $last_name,
             'email' => $email,
+            'active' => $active,
             'password' => Hash::make($password)
         ]);
 
@@ -29,6 +44,11 @@ class UserAuthenticationController extends Controller
         ], 201);
     }
 
+    /*
+|--------------------------------------------------------------------------
+| START OF LOGIN OR ACCESS FUNCTION
+|--------------------------------------------------------------------------
+*/ 
     public function login(Request $request) {
         $email = strtolower($request -> input('email'));
         $password = $request->input('password');
@@ -52,8 +72,15 @@ class UserAuthenticationController extends Controller
         return response() -> json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'message' => 'User signed in Successfully'
         ], 200);
     }
+
+        /*
+|--------------------------------------------------------------------------
+| START OF LOGOUT FUNCTION
+|--------------------------------------------------------------------------
+*/ 
 
     public function logout() {
         auth()->user()->tokens() -> delete();
@@ -62,4 +89,112 @@ class UserAuthenticationController extends Controller
             'message' => 'Succefully logged out'
         ]);
     }
+
+
+           /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
+
+        public function index()
+    {
+        $users = User::all();
+        $total = $users->count();
+        return response()->json([
+            'data' => $users,
+            'total users' =>$total,
+            'message' => 'Users Data Fetched Successfully'],200);
+    }
+
+        /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD
+|--------------------------------------------------------------------------
+*/  
+                public function search($name)
+                {
+                    $result = User::where('email', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data not found'], 404);
+                  }
+                }
+
+        /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/  
+        public function update(Request $request, User $user)
+            {
+                $input = $request->all();
+
+                $validator = Validator::make($input, [
+                    'first_name' => 'required',
+                    //'middle_name' => 'required',
+                    'last_name' => 'required',
+                    'email' => 'required',
+                    'active' => 'required',
+                ]);
+
+                if($validator->fails()){
+                    return $this->sendError($validator->errors());       
+                }
+
+                $user->first_name = $input['first_name'];
+                $user->middle_name = $input['middle_name'];
+                $user->last_name = $input['last_name'];
+                $user->email = $input['email'];
+                $user->active = $input['active'];
+                $user->save();
+                
+                return response()->json([
+                    'data' => $user,
+                    'message' => 'Record Updated Successfully'
+                ],200);
+            }
+
+        /*
+|--------------------------------------------------------------------------
+| TOTAL USERS
+|--------------------------------------------------------------------------
+*/  
+        public function users_count()
+            {
+                 return User::count();
+
+            }
+   /*
+|--------------------------------------------------------------------------
+| TOTAL ACTIVE USERS
+|--------------------------------------------------------------------------
+*/   
+       public function total_active_members()
+        {
+            //
+           return $data['users']= User::where('active','=','YES')
+                ->count();
+          
+        }
+
+ /*
+|--------------------------------------------------------------------------
+| TOTAL INACTIVE USERS
+|--------------------------------------------------------------------------
+*/   
+       public function total_inactive_members()
+        {
+            //
+           return $data['users']= User::where('active','!=','YES')
+                ->count();
+        }
+/*   
+
+END
+*/
+
 }
