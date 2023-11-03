@@ -50,6 +50,9 @@ Route::delete('v1/prayercells/{prayercell}', [PrayercellsController::class, 'des
 Route::post('login', [UserAuthenticationController::class, 'login']);
 Route::post('register', [UserAuthenticationController::class, 'register']);
 Route::post('logout', [UserAuthenticationController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('view-users', [UserAuthenticationController::class, 'index']);
+Route::get('search-users/{name}',[UserAuthenticationController::class, 'search']);
+Route::post('update-users/{user}',[UserAuthenticationController::class, 'update']);
 
 /*
 |--------------------------------------------------------------------------
