@@ -76,4 +76,25 @@ class PrayercellsController extends Controller
         $prayercell -> delete(); 
         return response() -> json(null, 204);
     }
+/*
+    |--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/   
+                public function search($name)
+                {
+                    $result = Prayercells::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data | not found'], 404);
+                  }
+                }
+     /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }

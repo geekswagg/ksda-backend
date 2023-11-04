@@ -11,16 +11,22 @@ use App\Http\Resources\Paymentmode as PaymentmodeResource;
 
 class PaymentmodeController extends BaseController
 {
-    //
-     #START OF FUNCTION TO LIST ALL RECORDS
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
     public function index()
     {
         $paymentmodes = Paymentmode::all();
         return $this->sendResponse(PaymentmodeResource::collection($paymentmodes), 'Payment Mode Fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO ADD | STORE A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO ADD OR STORE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function store(Request $request)
     {
         $input = $request->all();
@@ -35,8 +41,11 @@ class PaymentmodeController extends BaseController
         return $this->sendResponse(new PaymentmodeResource($paymentmode), 'Payment Mode Created.');
     }
    
-   #END
-   #START OF FUNCTION TO SHOW A RECORD
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO LIST A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function show($id)
     {
         $paymentmode = Paymentmode::find($id);
@@ -46,8 +55,11 @@ class PaymentmodeController extends BaseController
         return $this->sendResponse(new PaymentmodeResource($paymentmode), 'Payment Mode Fetched.');
     }
     
-    #END
-    #START OF FUNCTION TO EDIT | UPDATE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO UPDATE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function update(Request $request, Paymentmode $paymentmode)
     {
         $input = $request->all();
@@ -64,28 +76,36 @@ class PaymentmodeController extends BaseController
         
         return $this->sendResponse(new PaymentmodeResource($paymentmode), 'Payment Mode Updated.');
     }
-    #END
-   
-   #START OF FUNCTION TO DELETE
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO DELETE A RECORD
+|--------------------------------------------------------------------------
+*/ 
     public function destroy(Paymentmode $paymentmode)
     {
         $paymentmode->delete();
         return $this->sendResponse([], 'Payment Mode Deleted.');
     }
-    #END
-
-
-    #START SEARCH
-    public function searchpaymentmode(Request $request)
-        {
-            $search = request()->get('search');
-
-            $paymentmodes = Paymentmode::where('name', 'LIKE', "%{$search}%")->Paginate(10);            
-            
-            return Response::json(array('paymentmodes' => $paymentmodes));
-
-        }
-
-        #END SEARCH
+    /*
+|--------------------------------------------------------------------------
+| START OF FUNCTION TO SEARCH A RECORD OR ALL RECORDS
+|--------------------------------------------------------------------------
+*/ 
+                public function search($name)
+                {
+                    $result = Paymentmode::where('name', 'LIKE', '%'. $name. '%')->get();
+                    if(count($result)){
+                     return Response()->json($result);
+                    }
+                    else
+                    {
+                    return response()->json(['Result' => 'No Data found'], 404);
+                  }
+                }
+      /*
+|--------------------------------------------------------------------------
+| END
+|--------------------------------------------------------------------------
+*/ 
 }
 
